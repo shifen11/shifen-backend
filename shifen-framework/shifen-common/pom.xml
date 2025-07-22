@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+<parent>
+    <groupId>com.shifen</groupId>
+    <artifactId>shifen-framework</artifactId>
+    <version>${revision}</version>
+</parent>
+    <artifactId>shifen-common</artifactId>
+    <packaging>jar</packaging>
+
+    <name>${project.artifactId}</name>
+    <description>定义基础 pojo 类、枚举、工具类等等</description>
+    <dependencies>
+
+    </dependencies>
+</project>

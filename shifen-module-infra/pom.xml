@@ -24,7 +24,11 @@
             <groupId>com.shifen</groupId>
             <artifactId>shifen-spring-boot-starter-mybatis</artifactId>
         </dependency>
-
+        <!-- Web 相关 -->
+        <dependency>
+            <groupId>com.shifen</groupId>
+            <artifactId>shifen-spring-boot-starter-security</artifactId>
+        </dependency>
     </dependencies>
 
 

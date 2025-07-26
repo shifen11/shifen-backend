@@ -15,6 +15,7 @@
         <module>shifen-spring-boot-starter-mybatis</module>
         <module>shifen-spring-boot-starter-redis</module>
         <module>shifen-common</module>
+        <module>shifen-spring-boot-starter-web</module>
     </modules>
     <description>
         该包是技术组件，每个子包，代表一个组件。每个组件包括两部分：

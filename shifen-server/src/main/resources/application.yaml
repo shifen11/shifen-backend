@@ -1,16 +1,7 @@
-# springdoc-openapi项目配置
-springdoc:
-  swagger-ui:
-    path: /swagger-ui.html       # Swagger UI 的访问路径
-    tags-sorter: alpha           # 按字母顺序排序标签
-    operations-sorter: alpha     # 按字母顺序排序接口
-  api-docs:
-    path: /v3/api-docs           # OpenAPI JSON 描述文件的路径
-  group-configs:
-    - group: 'default'           # 默认分组
-      paths-to-match: '/**'      # 匹配所有路径
-      packages-to-scan: com.coder.shifen  # 扫描的包路径
-
+knife4j:
+  enable: false
+  setting:
+    language: zh_cn
 spring:
   profiles:
     active: local

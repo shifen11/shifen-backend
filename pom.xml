@@ -23,14 +23,22 @@
         <revision>0.0.1-SNAPSHOT</revision>
         <!-- Maven 相关 -->
         <java.version>1.8</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <maven-surefire-plugin.version>3.2.2</maven-surefire-plugin.version>
+        <maven-compiler-plugin.version>3.14.0</maven-compiler-plugin.version>
+        <flatten-maven-plugin.version>1.6.0</flatten-maven-plugin.version>
         <!-- 统一依赖管理 -->
         <spring.framework.version>5.3.39</spring.framework.version>
         <spring.security.version>5.8.14</spring.security.version>
         <spring.boot.version>2.7.18</spring.boot.version>
         <netty.version>4.1.116.Final</netty.version>
-        <!-- 看看咋放到 bom 里 -->
+        <!-- 工具类相关 -->
         <lombok.version>1.18.36</lombok.version>
         <spring.boot.version>2.7.18</spring.boot.version>
+        <mapstruct.version>1.6.3</mapstruct.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <hutool.version>5.8.35</hutool.version>
         <!-- Web 相关 -->
         <knife4j.version>4.5.0</knife4j.version>
         <springdoc.version>1.8.0</springdoc.version>
@@ -40,7 +48,9 @@
 
     <dependencyManagement>
         <dependencies>
+
             <!-- 统一依赖管理 -->
+
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-bom</artifactId>
@@ -69,7 +79,9 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
             <!-- DB 相关 -->
+
             <dependency>
                 <groupId>com.shifen</groupId>
                 <artifactId>shifen-spring-boot-starter-mybatis</artifactId>
@@ -80,7 +92,9 @@
                 <artifactId>mybatis-plus-boot-starter</artifactId>
                 <version>${mybatis-plus.version}</version>
             </dependency>
+
             <!-- Web 相关 -->
+
             <dependency>
                 <groupId>com.shifen</groupId>
                 <artifactId>shifen-spring-boot-starter-web</artifactId>
@@ -101,7 +115,9 @@
                 <artifactId>shifen-spring-boot-starter-security</artifactId>
                 <version>${revision}</version>
             </dependency>
+
             <!-- 工具类相关 -->
+
             <dependency>
                 <groupId>com.shifen</groupId>
                 <artifactId>shifen-common</artifactId>
@@ -118,10 +134,89 @@
                 <version>${spring.boot.version}</version>
                 <scope>test</scope>
             </dependency>
-
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
+
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- maven-surefire-plugin 插件，用于运行单元测试。 -->
+                <!-- 注意，需要使用 3.0.X+，因为要支持 Junit 5 版本 -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                </plugin>
+                <!-- maven-compiler-plugin 插件，解决 spring-boot-configuration-processor + Lombok + MapStruct 组合 -->
+                <!-- https://stackoverflow.com/questions/33483697/re-run-spring-boot-configuration-annotation-processor-to-update-generated-metada -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>${maven-compiler-plugin.version}</version>
+                    <configuration>
+                        <annotationProcessorPaths>
+                            <path>
+                                <groupId>org.springframework.boot</groupId>
+                                <artifactId>spring-boot-configuration-processor</artifactId>
+                                <version>${spring.boot.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                                <version>${lombok.version}</version>
+                            </path>
+                            <path>
+                                <groupId>org.mapstruct</groupId>
+                                <artifactId>mapstruct-processor</artifactId>
+                                <version>${mapstruct.version}</version>
+                            </path>
+                        </annotationProcessorPaths>
+                    </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.codehaus.mojo</groupId>
+                    <artifactId>flatten-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+        <plugins>
+            <!-- 统一 revision 版本 -->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <version>${flatten-maven-plugin.version}</version>
+                <configuration>
+                    <flattenMode>oss</flattenMode>
+                    <updatePomFile>true</updatePomFile>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>flatten</goal>
+                        </goals>
+                        <id>flatten</id>
+                        <phase>process-resources</phase>
+                    </execution>
+                    <execution>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                        <id>flatten.clean</id>
+                        <phase>clean</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
     <!-- 使用 huawei / aliyun 的 Maven 源，提升下载速度 -->
     <repositories>

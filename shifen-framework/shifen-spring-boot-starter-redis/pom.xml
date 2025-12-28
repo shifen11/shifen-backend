@@ -7,11 +7,13 @@
         <artifactId>shifen-framework</artifactId>
         <version>${revision}</version>
     </parent>
+
     <artifactId>shifen-spring-boot-starter-redis</artifactId>
     <packaging>jar</packaging>
 
     <name>${project.artifactId}</name>
     <description>Redis 封装拓展</description>
+
     <dependencies>
         <dependency>
             <groupId>com.shifen</groupId>
